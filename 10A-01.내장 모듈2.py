@@ -277,28 +277,27 @@ def lesson_time():
 
     end = time.perf_counter()
     elapsed = end - start
-    print(f"[중급] 1부터 100000까지 더한 값: {total}")
-    print(f"[중급] 반복문 실행 시간: {elapsed:.6f}초")
+    print(f"[중급] 1부터 100000까지 더한 값: {total}")  # 5000050000
+    print(f"[중급] 반복문 실행 시간: {elapsed:.6f}초")  # 0.002457
 
-    # [응용] 리스트 컴프리헨션과 반복문 속도 비교
-    # 리스트 컴프리헨션은 리스트를 짧고 빠르게 만드는 문법.
-    start_loop = time.perf_counter()
+    # [응용] 리스트 컴프리헨션과 반복문 속도 비교, 제곱값 리스트에 저장하는 속도 비교
+    start_loop = time.perf_counter()        # 현재 시간 저장 : 23186.3466051 <= 저장된 값 예시
     squares_loop = []
     for x in range(1, 50_001):
         squares_loop.append(x ** 2)
-    end_loop = time.perf_counter()
+    end_loop = time.perf_counter()          # 
 
     start_comprehension = time.perf_counter()
-    squares_comprehension = [x ** 2 for x in range(1, 50_001)]
+    squares_comprehension = [x ** 2 for x in range(1, 50_001)]  # 리스트 컴프리핸션은 for문보다 반복문 속도 빠름
     end_comprehension = time.perf_counter()
 
     print(f"[응용] for 반복문 리스트 생성 시간: {end_loop - start_loop:.6f}초")
     print(f"[응용] 리스트 컴프리헨션 생성 시간: {end_comprehension - start_comprehension:.6f}초")
     print(f"[응용] 두 결과가 같은가? {squares_loop == squares_comprehension}")
-
+    
     # [미니 과제]
-    # 1. range의 크기를 10000, 100000, 1000000으로 바꾸어 실행 시간을 비교해 보자.
-    # 2. sleep 시간을 3초로 바꾸어 카운트다운 프로그램을 만들어 보자.
+    # 1. range의 크기를 10000, 100000, 1000000으로 변경해서 실행 시간 비교.
+    # 2. sleep 시간을 3초로 바꾸어 카운트다운 프로그램 제작.
 
 # ------------------------------------------------------------
 # 5. os: 운영체제와 파일/폴더 다루기
@@ -306,44 +305,32 @@ def lesson_time():
 def lesson_os():
     # --------------------------------------------------------
     # [함수 설명]
-    # os 모듈은 파이썬 프로그램이 운영체제와 소통할 수 있게 해 준다.
-    # 현재 작업 폴더 확인, 파일 목록 가져오기, 파일 정보 확인,
-    # 환경 변수 읽기 등 컴퓨터의 실제 파일 시스템과 연결되는 기능.
-    #
-    # [수업 흐름]
-    # 1. 현재 작업 디렉터리를 확인한다.
-    # 2. 운영체제 종류와 현재 폴더의 파일 목록을 살펴본다.
-    # 3. 예제 텍스트 파일을 만든 뒤 존재 여부, 크기, 수정 시간을 확인한다.
-    # 4. 사용자 홈 폴더 환경 변수를 읽는다.
-    # --------------------------------------------------------
+    # os 모듈은 파이썬 프로그램이 운영체제와의 소통 기능
+    # 현재 작업 폴더 확인, 파일 목록 가져오기, 파일 정보 확인,환경 변수 읽기 등 컴퓨터의 실제 파일 시스템과 연결되는 기능.
+    # 주의: os.system은 운영체제 명령을 직접 실행하므로, 사용자 입력을 그대로 넣으면 위험할 수 있다.
     border("5. os 모듈 - 내 컴퓨터의 폴더와 파일 살펴보기")
 
-    # os 모듈은 운영체제와 상호작용할 수 있게 해 준다.
-    # 예를 들어 현재 작업 폴더 확인, 파일 목록 가져오기, 환경 변수 확인 등이 가능하다.
-    # 주의: os.system은 운영체제 명령을 직접 실행하므로, 사용자 입력을 그대로 넣으면 위험할 수 있다.
-
     # [기초] 현재 작업 디렉터리 확인
-    current_dir = os.getcwd()
+    current_dir = os.getcwd()           # get Current Working Directory
     print(f"[기초] 현재 작업 디렉터리: {current_dir}")
 
     # [기초] 운영체제 종류 확인
-    # os.name은 Windows에서는 'nt', macOS/Linux에서는 'posix'인 경우가 많다.
+    # os.name은 Windows에서는 'nt', macOS/Linux에서는 'posix'인 경우가 많음.
     print(f"[기초] os.name 값: {os.name}")
 
     # [기초] 현재 폴더 파일 목록 보기
     # os.listdir('.')에서 '.'은 현재 폴더를 뜻한다.
-    files = os.listdir('.')
+    files = os.listdir('.')                         # 현재 폴더내의 파일 목록 저장
     print("[기초] 현재 폴더의 일부 항목:")
     for filename in files[:5]:
         print(f"  - {filename}")
 
     # [중급] 파일 존재 여부, 크기, 수정 시각 확인
-    # 예제 파일을 하나 만들어 놓고 os.path 기능으로 정보를 확인한다.
     memo_path = DATA_DIR / "school_memo.txt"
     memo_path.write_text("파이썬 표준 라이브러리 수업 메모\n", encoding="utf-8")
 
-    # os.path 함수는 문자열 경로를 받는 경우가 많다.
-    # Path 객체도 대부분 자동으로 처리되지만, str()로 바꾸면 더 명확하다.
+    # os.path 함수는 문자열 경로를 받는 경우가 많음.
+    # Path 객체도 대부분 자동으로 처리되지만, str()로 바꾸면 더 명확해짐.
     memo_path_str = str(memo_path)
     if os.path.exists(memo_path_str):
         size = os.path.getsize(memo_path_str)
@@ -354,21 +341,21 @@ def lesson_os():
         print(f"[중급] 마지막 수정 시각: {modified_time.strftime('%Y-%m-%d %H:%M:%S')}")
 
     # [중급] 환경 변수 읽기
-    # 환경 변수는 운영체제가 프로그램에 알려 주는 설정값이다.
+    # 환경 변수는 운영체제가 프로그램에 알려 주는 설정값
     # 예: 사용자 이름, 홈 폴더, 임시 폴더 등
     home_dir = os.environ.get("HOME") or os.environ.get("USERPROFILE")
     print(f"[중급] 사용자 홈 폴더: {home_dir}")
 
-    # [응용] os.system 대신 안전한 방향으로 생각하기
-    # 아래 코드는 운영체제별 화면 지우기 명령을 설명하기 위한 예시이다.
+    # [응용] os.system 
+    # 아래 코드는 운영체제별 화면 지우기 명령
     clear_command = "cls" if os.name == "nt" else "clear"
     print(f"[응용] 이 운영체제에서 화면 지우기 명령은 보통 '{clear_command}'입니다.")
     print("[응용] os.system(clear_command)는 가능하지만, 초보 단계에서는 꼭 필요한 경우에만 사용합니다.")
     # os.system(clear_command)
 
     # [미니 과제]
-    # 1. DATA_DIR 폴더 안에 자기 이름이 들어간 txt 파일을 만들어 보자.
-    # 2. 현재 폴더의 파일 중 .py로 끝나는 파일만 출력해 보자.
+    # 1. DATA_DIR 폴더 안에 자기 이름이 들어간 txt 파일 생성하기.
+    # 2. 현재 폴더의 파일 중 .py로 끝나는 파일만 출력.
 
 # ------------------------------------------------------------
 # 6. sys: 파이썬 실행 환경 정보
@@ -376,31 +363,21 @@ def lesson_os():
 def lesson_sys():
     # --------------------------------------------------------
     # [함수 설명]
-    # sys 모듈은 현재 실행 중인 파이썬 인터프리터 자체의 정보를 제공한다.
-    # 파이썬 버전, 실행 플랫폼, 명령줄 인수, import 경로처럼
-    # 프로그램 실행 환경을 확인할 때 사용한다.
-    #
-    # [수업 흐름]
-    # 1. 파이썬 버전과 실행 플랫폼을 확인한다.
-    # 2. sys.argv로 터미널에서 전달한 값을 읽는 원리를 배운다.
-    # 3. sys.path로 import가 모듈을 찾는 경로를 이해한다.
-    # 4. 운영체제에 따라 다른 안내문을 출력하는 조건문 예제를 살펴본다.
+    # sys 모듈은 현재 실행 중인 파이썬 인터프리터 자체의 정보를 제공.
+    # 파이썬 버전, 실행 플랫폼, 명령줄 인수, import 경로 등를 살펴본다.
     # --------------------------------------------------------
     border("6. sys 모듈 - 파이썬 인터프리터 정보 확인")
-
-    # sys 모듈은 현재 실행 중인 파이썬 자체와 관련된 정보를 제공한다.
-    # 운영체제 정보는 os, 파이썬 실행 환경 정보는 sys라고 구분해 생각하면 쉽다.
 
     # [기초] 파이썬 버전 확인
     print(f"[기초] 파이썬 버전: {sys.version}")
 
     # [기초] 실행 플랫폼 확인
-    # sys.platform은 win32, darwin, linux 같은 값을 가질 수 있다.
+    # sys.platform은 win32, darwin, linux 
     print(f"[기초] 실행 플랫폼: {sys.platform}")
 
     # [중급] 명령줄 인수 확인
     # 터미널에서 python 파일명.py apple banana 처럼 실행하면
-    # sys.argv에는 ['파일명.py', 'apple', 'banana']처럼 저장된다.
+    # sys.argv에는 ['파일명.py', 'apple', 'banana']처럼 저장.
     print("[중급] 명령줄 인수 sys.argv:")
     for index, argument in enumerate(sys.argv):
         print(f"  sys.argv[{index}] = {argument}")
@@ -420,13 +397,12 @@ def lesson_sys():
         message = "Linux 또는 기타 Unix 계열 환경입니다. 터미널에서 실행할 수 있습니다."
     print(f"[응용] {message}")
 
-    # sys.exit()는 프로그램을 즉시 종료할 때 사용한다.
+    # sys.exit() : 프로그램 즉시 종료.
     # sys.exit("프로그램을 종료합니다.")
 
     # [미니 과제]
-    # 1. 터미널에서 이 파일 뒤에 자신의 이름을 붙여 실행하고 sys.argv 결과를 확인해 보자.
-    # 2. sys.path에 어떤 폴더들이 들어 있는지 출력 개수를 늘려 확인해 보자.
-
+    # 1. 터미널에서 이 파일 뒤에 자신의 이름을 붙여 실행하고 sys.argv 결과 확인하기.
+    # 2. sys.path에 어떤 폴더들이 들어 있는지 출력 개수를 늘려 확인하기.
 
 # ------------------------------------------------------------
 # 7. json: 데이터를 문자열 또는 파일로 저장하기
@@ -434,22 +410,10 @@ def lesson_sys():
 def lesson_json():
     # --------------------------------------------------------
     # [함수 설명]
-    # json 모듈은 파이썬의 딕셔너리와 리스트 구조를
-    # 저장하거나 다른 프로그램과 주고받기 쉬운 JSON 형식으로 바꾼다.
-    # 게임 랭킹, 사용자 설정, 설문 결과, 웹 API 데이터 처리에 자주 쓰인다.
-    #
-    # [수업 흐름]
-    # 1. 딕셔너리를 JSON 문자열로 변환한다.
-    # 2. JSON 문자열을 다시 파이썬 객체로 복원한다.
-    # 3. 게임 랭킹 데이터를 JSON 파일로 저장한다.
-    # 4. 저장한 JSON 파일을 읽어 랭킹을 출력한다.
-    # 5. max와 lambda를 이용해 최고 점수 플레이어를 찾는다.
-    # --------------------------------------------------------
-    border("7. json 모듈 - 게임 랭킹과 설문 결과 저장")
-
     # JSON은 JavaScript Object Notation의 약자이다.
-    # 파이썬의 딕셔너리와 리스트를 저장하거나 다른 프로그램과 주고받을 때 많이 사용한다.
-    # 예: 게임 설정 파일, 웹 API 응답, 앱 데이터 저장 등
+    # 파이썬의 딕셔너리와 리스트 구조를 저장하거나 다른 프로그램과 주고받기 쉬운 JSON 형식으로 변환
+    # 게임 랭킹, 사용자 설정, 설문 결과, 웹 API 데이터 처리 등에 사용
+    border("7. json 모듈 - 게임 랭킹과 설문 결과 저장")
 
     # [기초] 파이썬 딕셔너리를 JSON 문자열로 바꾸기
     student_profile = {
@@ -459,15 +423,16 @@ def lesson_json():
         "is_club_member": True,
     }
 
-    # dumps의 s는 string을 떠올리면 쉽다. 파이썬 객체를 JSON 문자열로 만든다.
-    # ensure_ascii=False는 한글이 \uac00 같은 코드로 바뀌지 않고 그대로 보이게 한다.
+    # 객체(Dictionary)를 JSON 문자열로 변환
+    # dumps의 s는 string. 
+    # ensure_ascii=False는 한글이 \uac00 같은 코드로 변환되지 않고 바로 보임.
     json_text = json.dumps(student_profile, ensure_ascii=False, indent=4)
     print("[기초] 딕셔너리를 JSON 문자열로 변환:")
     print(json_text)
 
-    # [기초] JSON 문자열을 다시 파이썬 객체로 바꾸기
+    # [기초] JSON 문자열을 다시 파이썬 객체 Dictionary 로 변환
     restored_profile = json.loads(json_text)
-    print(f"[기초] JSON 문자열을 다시 변환한 자료형: {type(restored_profile)}")
+    print(f"[기초] JSON 문자열을 다시 변환한 자료형: {type(restored_profile)}")     # <class 'dict'>
     print(f"[기초] 복원한 이름: {restored_profile['name']}")
 
     # [중급] 게임 랭킹 데이터를 JSON 파일로 저장하기
