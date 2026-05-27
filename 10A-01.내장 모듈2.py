@@ -9,31 +9,6 @@
 2. math, random, datetime, time, os, sys, json, collections 모듈의 대표 기능을 사용할 수 있다.
 3. 단순한 함수 사용에서 시작해 작은 문제 해결 프로그램으로 확장할 수 있다.
 4. 난수, 날짜 계산, 파일 경로, JSON 저장, 데이터 집계가 실제 프로그램에서 어떻게 연결되는지 이해한다.
-
-[선행 학습]
-- 변수, 자료형 int/float/str/bool
-- 리스트, 딕셔너리, 튜플의 기본 사용법
-- if 조건문, for 반복문
-- 함수 def, 매개변수, return의 기본 개념
-- 파일 읽기/쓰기의 아주 기초 개념
-
-[후행 학습]
-- 나만의 모듈 만들기: my_module.py를 만들고 import하기
-- 외부 라이브러리 설치와 활용: pip, requests, pandas 등
-- 파일 기반 프로젝트: 게임 기록 저장, 학급 설문 분석, 일정 관리 프로그램
-- 예외 처리: try-except로 파일이 없거나 입력이 잘못된 상황 처리하기
-
-[사용되는 기능 및 기술]
-- import, from ... import ...
-- math.pi, math.sqrt, math.hypot, math.radians, math.sin, math.ceil, math.floor
-- random.randint, random.choice, random.sample, random.choices, random.shuffle, random.seed
-- datetime.now, date, timedelta, strftime
-- time.sleep, time.perf_counter, time.strftime, time.localtime
-- os.getcwd, os.listdir, os.path.exists, os.path.getsize, os.name, os.environ
-- sys.version, sys.platform, sys.argv, sys.path
-- json.dumps, json.dump, json.loads, json.load
-- collections.Counter, defaultdict, deque
-- 보강 모듈: pathlib.Path, statistics.mean, statistics.median
 """
 
 # 표준 라이브러리는 파이썬 설치만 되어 있으면 바로 import해서 사용 가능
@@ -52,7 +27,6 @@ from pathlib import Path
 # 공통 도우미 함수
 # ------------------------------------------------------------
 def border(title, sign="=", width=72):
-    #화면에 단원 제목을 보기 좋게 출력하는 함수
     line = sign * width
     print("\n" + line)
     print(title)
@@ -82,30 +56,21 @@ DATA_DIR = get_base_dir()
 def lesson_math():
     # --------------------------------------------------------
     # [함수 설명]
-    # math 모듈은 복잡한 수학 공식을 직접 외워서 구현하지 않아도
-    # 파이썬이 제공하는 함수와 상수를 이용해 안전하게 계산하도록 돕는다.
-    # 이 함수에서는 원주율, 제곱근, 올림/내림, 두 점 사이 거리,
-    # 삼각함수처럼 고등학교 수학과 연결되는 내용을 코드로 확인한다.
-    #
-    # [수업 흐름]
-    # 1. 원의 넓이 계산으로 math.pi와 거듭제곱을 익힌다.
-    # 2. 반올림, 올림, 내림을 비교하며 숫자 처리 방법을 배운다.
-    # 3. 게임 맵 거리 계산으로 피타고라스 정리를 프로그래밍에 적용한다.
-    # 4. 각도와 라디안의 차이를 알고 삼각함수 사용법을 익힌다.
-    # 5. 농구공 방향 예제로 수학 계산이 실제 상황 모델링에 쓰임을 이해한다.
+    # math 모듈 : 원주율, 제곱근, 올림/내림, 두 점 사이 거리, 삼각함수 등
     # --------------------------------------------------------
     border("1. math 모듈 - 게임 맵과 체육대회에서 만나는 수학")
 
     # [기초] 원의 넓이 구하기
-    # math.pi는 원주율 pi 값을 담고 있는 상수이다.
-    # **는 거듭제곱 연산자이다. radius ** 2는 radius의 제곱이다.
+    # math.pi는 원주율 pi 값을 담고 있는 상수.
+    # **는 거듭제곱 연산자. radius ** 2는 radius의 제곱.
     radius = 5
     area = math.pi * (radius ** 2)
     print(f"[기초] 반지름 {radius}m인 원형 무대의 넓이: {area:.2f}㎡")
 
     # [기초] 반올림과 올림/내림
-    # round(x, 2) : 소수 둘째 자리까지 반올림한다.
-    # math.ceil은 올림, math.floor는 내림이다.
+    # round(x, 2) : 소수 둘째 자리까지 반올림.
+    # math.sqrt() : 제곱근
+    # math.ceil은 올림, math.floor는 내림.
     pizza_area = math.pi * (10 ** 2)
     print(f"[기초] 피자 넓이 원본값: {pizza_area}")
     print(f"[기초] 피자 넓이 반올림: {round(pizza_area, 2)}")
@@ -113,20 +78,20 @@ def lesson_math():
     print(f"[기초] 소수점 아래를 버린 넓이: {math.floor(pizza_area)}㎠")
 
     # [중급] 두 점 사이의 거리 구하기
-    # 게임 맵에서 플레이어와 보스 몬스터 사이의 거리를 구한다고 생각해 보자.
+    # 게임 맵에서 플레이어와 보스 몬스터 사이의 거리 구하기.
     # 피타고라스 정리: sqrt((x2-x1)^2 + (y2-y1)^2)
     player_x, player_y = 2, 3
     boss_x, boss_y = 11, 15
     distance_by_sqrt = math.sqrt((boss_x - player_x) ** 2 + (boss_y - player_y) ** 2)
 
-    # math.hypot(a, b)는 sqrt(a^2 + b^2)를 더 간단하고 안정적으로 계산한다.
+    # math.hypot(a, b) : a, b는 밑변과 높이 두 변의 길이. hypotenuse(빗변)
     distance_by_hypot = math.hypot(boss_x - player_x, boss_y - player_y)
     print(f"[중급] 플레이어와 보스의 거리 sqrt 방식: {distance_by_sqrt:.2f}")
     print(f"[중급] 플레이어와 보스의 거리 hypot 방식: {distance_by_hypot:.2f}")
 
-    # [중급] 각도와 라디안
-    # 파이썬의 삼각함수 sin, cos, tan은 각도를 그대로 쓰지 않고 라디안(radian)을 사용한다.
-    # 그래서 45도를 math.radians(45)로 먼저 변환해야 한다.
+    # [중급] 각도와 라디안(1라디안 : 호의 길이와 반지름의 길이가 같게 되는 만큼의 각)
+    # sin, cos, tan은 각도를 그대로 쓰지 않고 라디안(radian)을 사용.
+    # 45도는 math.radians(45)로 먼저 변환.
     angle_degree = 45
     angle_radian = math.radians(angle_degree)
     sin_value = math.sin(angle_radian)
@@ -135,47 +100,36 @@ def lesson_math():
     print(f"[중급] {angle_degree}도의 cos 값: {cos_value:.3f}")
 
     # [응용] 농구공이 날아간 위치 예측하기
-    # 아주 단순화한 모델이다. 실제 물리 계산은 훨씬 복잡하지만,
-    # x방향 이동량과 y방향 이동량을 삼각함수로 나누어 볼 수 있다.
+    # x방향 이동량과 y방향 이동량을 삼각함수
     speed = 20          # 공을 던진 힘, 임의 단위
     throw_angle = 30    # 던지는 각도
     rad = math.radians(throw_angle)
-    x_power = speed * math.cos(rad)
-    y_power = speed * math.sin(rad)
+    x_power = speed * math.cos(rad)     # 빗변에 대한 밑변의 비율(가로 방향의 비율)
+    y_power = speed * math.sin(rad)     # 빗변에 대한 높이의 비율(세로 방향의 비율)
     print(f"[응용] {throw_angle}도로 던진 공의 가로 방향 힘: {x_power:.2f}")
     print(f"[응용] {throw_angle}도로 던진 공의 세로 방향 힘: {y_power:.2f}")
 
     # [미니 과제]
-    # 1. player_x, player_y, boss_x, boss_y 값을 바꾸어 거리를 다시 계산해 보자.
-    # 2. throw_angle을 15, 30, 45, 60도로 바꾸면 x_power와 y_power가 어떻게 달라지는지 비교해 보자.
+    # 1. player_x, player_y, boss_x, boss_y 값을 바꾸어 거리를 다시 계산하기.
+    # 2. throw_angle을 15, 30, 45, 60도로 바꿔서 x_power와 y_power의 변화값 비교하기.
 
 # ------------------------------------------------------------
 # 2. random: 무작위 선택과 난수 생성
 # ------------------------------------------------------------
 def lesson_random():
-    # --------------------------------------------------------
     # [함수 설명]
-    # random 모듈은 예측하기 어려운 값을 만들 때 사용한다.
-    # 게임 아이템 뽑기, 발표자 선정, 팀 배정, 메뉴 추천처럼
-    # 학생들이 일상에서 쉽게 떠올릴 수 있는 상황에 활용할 수 있다.
-    #
-    # [수업 흐름]
-    # 1. randint로 정수 난수를 만든다.
-    # 2. choice로 리스트에서 하나를 무작위 선택한다.
-    # 3. sample로 중복 없이 여러 개를 뽑는다.
-    # 4. choices와 weights로 확률이 다른 뽑기를 만든다.
-    # 5. shuffle로 순서를 섞고, 이를 팀 배정 문제에 적용한다.
-    # --------------------------------------------------------
+    # random 모듈은 예측하기 어려운 값 생성.
+    # 사용 : 게임 아이템 뽑기, 발표자 선정, 팀 배정, 메뉴 추천
+    
     border("2. random 모듈 - 뽑기, 팀 배정, 아이템 드롭")
 
-    # random 모듈은 게임, 추첨, 시뮬레이션처럼 '예측하기 어려운 값'이 필요할 때 사용한다.
-    # 단, 컴퓨터의 난수는 완전한 진짜 무작위가 아니라 알고리즘으로 만든 의사 난수이다.
+    # 컴퓨터의 난수는 완전한 진짜 무작위가 아니라 알고리즘으로 만든 의사 난수.
 
-    # random.seed(값)을 사용하면 같은 난수 순서를 재현할 수 있다.
+    # random.seed(값)을 사용하면 같은 난수 순서 사용.
     random.seed(2026)
 
     # [기초] 주사위 굴리기
-    # randint(a, b)는 a 이상 b 이하의 정수를 무작위로 하나 뽑는다.
+    # randint(a, b)는 a 이상 b 이하의 무작위 정수
     dice = random.randint(1, 6)
     print(f"[기초] 주사위 한 번 굴리기: {dice}")
 
@@ -185,41 +139,40 @@ def lesson_random():
     print(f"[기초] 오늘의 급식 추천 메뉴: {today_lunch}")
 
     # [중급] 중복 없이 여러 개 고르기
-    # sample(목록, 개수)는 같은 항목을 두 번 뽑지 않는다.
+    # sample(목록, 개수)
     students = ["민준", "서연", "도윤", "지우", "하준", "하린", "지호", "서아"]
     presenters = random.sample(students, 2)
     print(f"[중급] 오늘 발표자 2명, 중복 없음: {presenters}")
 
     # [중급] 중복을 허용해 여러 개 고르기
-    # choices(목록, k=개수)는 같은 항목이 여러 번 나올 수 있다.
-    # 가중치 weights를 주면 특정 항목이 더 자주 나오도록 만들 수 있다.
+    # choices(목록, k=개수)
+    # weights(가중치)를 이용해서 빈도수 조정
     item_names = ["일반 포션", "고급 포션", "희귀 검", "전설 펫"]
-    item_weights = [60, 30, 9, 1]  # 숫자가 클수록 나올 확률이 높다.
+    item_weights = [60, 30, 9, 1]           # 숫자가 클수록 나올 확률 상승 .
     dropped_items = random.choices(item_names, weights=item_weights, k=10)
     print(f"[중급] 몬스터 10마리 사냥 후 아이템: {dropped_items}")
 
     # [중급] 순서 섞기
-    # shuffle은 원본 리스트 자체의 순서를 바꾼다. 따라서 원본을 보존하려면 복사본을 만든다.
-    team_members = students.copy()
+    # shuffle은 원본 리스트 자체의 순서 변경
+    team_members = students.copy()          # 복사본 생성
     random.shuffle(team_members)
     print(f"[중급] 무작위로 섞은 학생 순서: {team_members}")
 
     # [응용] 2명씩 팀 만들기
     teams = []
-    for i in range(0, len(team_members), 2):
-        teams.append(team_members[i:i + 2])
+    for i in range(0, len(team_members), 2):    # 2명 간격으로
+        teams.append(team_members[i:i + 2])     # 2명(리스트)을 team(2차원 리스트)에 추가
     print("[응용] 2명씩 랜덤 팀 배정:")
     for team_number, team in enumerate(teams, start=1):
         print(f"  {team_number}팀: {team}")
 
-    # [응용] 뽑기 결과를 Counter와 연결해 빈도 분석하기
-    # Counter는 뒤의 collections 단원에서 자세히 다룬다.
-    item_counter = Counter(dropped_items)
+    # [응용] 뽑기 결과를 Counter와 연결해 빈도 분석
+    item_counter = Counter(dropped_items)       # Dicionary와 비슷하게 {값:갯수} 형식으로 저장
     print(f"[응용] 아이템별 획득 개수: {item_counter}")
 
     # [미니 과제]
-    # 1. item_weights를 바꾸어 전설 펫이 더 잘 나오게 만들어 보자.
-    # 2. 학생 수가 홀수일 때 마지막 팀은 몇 명이 되는지 확인해 보자.
+    # 1. item_weights를 바꾸어 전설 펫의 빈도수 높이기.
+    # 2. 학생 수가 홀수일 때 마지막 팀은 몇 명이 되는지 확인.
 
 # ------------------------------------------------------------
 # 3. datetime: 날짜와 시간 계산
@@ -227,28 +180,19 @@ def lesson_random():
 def lesson_datetime():
     # --------------------------------------------------------
     # [함수 설명]
-    # datetime 모듈은 날짜와 시간을 계산하기 위한 표준 도구이다.
-    # 문자열로 보이는 날짜는 사람이 읽기에는 편하지만 계산하기 어렵다.
-    # 그래서 date, datetime, timedelta 같은 객체로 바꾸어 다룬다.
-    #
-    # [수업 흐름]
-    # 1. 현재 날짜와 시간을 가져온다.
-    # 2. strftime으로 날짜를 원하는 형식의 문자열로 바꾼다.
-    # 3. weekday로 요일을 구하고 한글 요일 목록과 연결한다.
-    # 4. timedelta로 D-Day처럼 남은 기간을 계산한다.
-    # 5. 시험 일정표에서 가장 가까운 일정을 찾는다.
+    # datetime 모듈은 날짜와 시간을 계산하기 위한 표준 도구.
+    # date, datetime, timedelta 같은 객체로 변경
     # --------------------------------------------------------
     border("3. datetime 모듈 - 학교 행사 D-Day 계산")
 
-    # datetime 모듈은 날짜와 시간을 객체로 다룰 수 있게 해 준다.
-    # 문자열 "2026-05-20"은 사람이 보기에는 날짜처럼 보이지만,
-    # 컴퓨터가 날짜 계산을 하려면 date 또는 datetime 객체로 바꾸어야 한다.
+    # "2026-05-20" <= 문자열 
+    # 날짜 계산을 하려면 date 또는 datetime 객체로 변경해야 함.
 
     # [기초] 현재 날짜와 시간 가져오기
     now = datetime.now()
     print(f"[기초] 현재 날짜와 시간 원본: {now}")
 
-    # strftime은 날짜와 시간을 원하는 형식의 문자열로 바꾸는 메서드이다.
+    # strftime은 날짜와 시간을 원하는 형식의 문자열로 바꾸는 메서드.
     # %Y: 4자리 연도, %m: 2자리 월, %d: 2자리 일
     # %H: 24시간제 시, %M: 분, %S: 초
     formatted_now = now.strftime("%Y년 %m월 %d일 %H시 %M분 %S초")
@@ -260,25 +204,21 @@ def lesson_datetime():
     print(f"[기초] 오늘의 요일: {weekday_names[now.weekday()]}")
 
     # [중급] 날짜끼리 빼기
-    # 날짜끼리 빼면 timedelta 객체가 나온다. timedelta는 '기간'을 나타낸다.
-    today = date.today()
-
-    # 예제 날짜를 고정된 과거 날짜로 두면 시간이 지나면서 D-Day가 음수가 될 수 있다.
-    # 그래서 현재 날짜 기준 30일 뒤를 학교 축제일이라고 가정한다.
-    festival_day = today + timedelta(days=30)
-    days_left = festival_day - today
+    # 날짜끼리 빼면 timedelta 객체 생성. timedelta는 '기간'을 나타냄.
+    today = date.today()    # 오늘 날짜 : 2026-05-27
+    festival_day = today + timedelta(days=30)       # 30일 뒤의 날짜
+    days_left = festival_day - today                # 남은 기간(일,시:분:초) : 30 days, 0:00:00
     print(f"[중급] 학교 축제일: {festival_day}")
     print(f"[중급] 학교 축제까지 남은 날: D-{days_left.days}")
 
     # [중급] 특정 날짜 직접 만들기
-    # date(연도, 월, 일) 형식으로 날짜 객체를 직접 만들 수 있다.
+    # date(연도, 월, 일) 형식으로 날짜 객체 생성.
     club_start = date(today.year, 3, 2)
     club_end = date(today.year, 12, 24)
     club_period = club_end - club_start
     print(f"[중급] 올해 동아리 활동 기간: {club_period.days}일")
 
     # [응용] 시험 일정표에서 가장 가까운 시험 찾기
-    # 딕셔너리의 key는 시험 이름, value는 시험 날짜이다.
     exam_schedule = {
         "1차 지필평가": today + timedelta(days=12),
         "수행평가 발표": today + timedelta(days=5),
@@ -299,8 +239,8 @@ def lesson_datetime():
     print(f"[응용] 가장 가까운 일정: {nearest_exam_name}, 날짜: {nearest_exam_day}, D-{nearest_days}")
 
     # [미니 과제]
-    # 1. 자신의 생일까지 며칠 남았는지 계산하는 코드를 작성해 보자.
-    # 2. exam_schedule에 새로운 시험이나 발표 일정을 추가해 보자.
+    # 1. 자신의 생일까지 며칠 남았는지 계산하는 코드 작성.
+    # 2. exam_schedule에 새로운 시험이나 발표 일정 추가.
 
 # ------------------------------------------------------------
 # 4. time: 실행 시간 측정과 잠깐 멈추기
@@ -308,40 +248,31 @@ def lesson_datetime():
 def lesson_time():
     # --------------------------------------------------------
     # [함수 설명]
-    # time 모듈은 프로그램이 실행되는 동안 흐르는 시간을 다룬다.
-    # datetime이 달력의 날짜와 시각을 다룬다면, time은 타이머,
+    # time 모듈은 프로그램이 실행되는 동안 흐르는 시간, 타이머
     # 잠깐 멈추기, 코드 실행 시간 측정에 자주 사용된다.
-    #
-    # [수업 흐름]
-    # 1. 현재 시각을 지역 시간 형식으로 출력한다.
-    # 2. sleep으로 프로그램을 잠시 멈추는 방법을 확인한다.
-    # 3. perf_counter로 반복문의 실행 시간을 측정한다.
-    # 4. 일반 for 반복문과 리스트 컴프리헨션의 속도를 비교한다.
     # --------------------------------------------------------
     border("4. time 모듈 - 타이머와 코드 속도 측정")
 
-    # datetime이 '달력 속 날짜와 시간'을 다루는 느낌이라면,
-    # time은 '흐르는 시간', '잠깐 멈추기', '실행 시간 측정'에 자주 사용된다.
+    # time은 '흐르는 시간', '잠깐 멈추기', '실행 시간 측정'에 사용.
 
     # [기초] 현재 시각 출력하기
-    # localtime은 현재 지역 시간 정보를 구조화된 형태로 돌려준다.
+    # localtime은 현재 지역 시간 정보를 구조화된 형태로 반환.
     current_time = time.localtime()
     formatted_time = time.strftime("%H시 %M분 %S초", current_time)
     print(f"[기초] 현재 시각: {formatted_time}")
 
     # [기초] sleep으로 잠깐 멈추기
-    # sleep(초)는 프로그램을 해당 초만큼 멈춘다.
+    # sleep(초)는 프로그램을 해당 초만큼 정지.
     print("[기초] 1초 타이머 시작!")
     time.sleep(1)
     print("[기초] 1초가 지났습니다.")
 
     # [중급] 코드 실행 시간 측정하기
-    # time.time도 시간을 잴 수 있지만, 실행 시간 측정에는 perf_counter가 더 적합하다.
-    # perf_counter는 아주 짧은 시간 차이도 비교적 정밀하게 측정한다.
+    # perf_counter는 비교적 정밀하게 측정.
     start = time.perf_counter()
 
     total = 0
-    for number in range(1, 100_001):
+    for number in range(1, 100_001):        # # 밑줄(_)은 숫자를 보기 좋게 쓰기 위한 표시. 100_001은 100001과 같은 값.
         total += number
 
     end = time.perf_counter()
@@ -350,7 +281,7 @@ def lesson_time():
     print(f"[중급] 반복문 실행 시간: {elapsed:.6f}초")
 
     # [응용] 리스트 컴프리헨션과 반복문 속도 비교
-    # 리스트 컴프리헨션은 리스트를 짧고 빠르게 만드는 문법이다.
+    # 리스트 컴프리헨션은 리스트를 짧고 빠르게 만드는 문법.
     start_loop = time.perf_counter()
     squares_loop = []
     for x in range(1, 50_001):

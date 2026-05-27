@@ -1,0 +1,21 @@
+{
+    "game_title": "Python High School Quest",
+    "updated_at": "2026-05-27 10:50:29",
+    "players": [
+        {
+            "nickname": "LoopMaster",
+            "score": 9800,
+            "level": 25
+        },
+        {
+            "nickname": "BugHunter",
+            "score": 8700,
+            "level": 22
+        },
+        {
+            "nickname": "ListWizard",
+            "score": 9100,
+            "level": 24
+        }
+    ]
+}
