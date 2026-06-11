@@ -73,39 +73,11 @@ def lesson_03_json_posts():
     for post in posts[:5]:
         print(f"[{post['id']}] {post['title']}")
 
+   
 ############################################################
-# 4. [난이도: 하] 고양이 상식 API - JSON 딕셔너리 이해
+# 4. [난이도: 중] 포켓몬 정보 찾아보기 - 입력값으로 API 검색
 ############################################################
-def lesson_04_cat_fact():
-    import requests
-    import urllib3
-
-    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) # SSL 인증서 검증 비활성 및 경고 숨김
-
-    print()
-    print("=" * 60)
-    print("4. [난이도: 하] 고양이 상식 API - JSON 딕셔너리 이해")
-    print("=" * 60)
-
-    # catfact.ninja/fact는 고양이 상식 1개를 JSON 형식으로 보내 주는 공개 API.
-    response = requests.get("https://catfact.ninja/fact", verify=False)
-
-    # JSON 데이터를 파이썬 형식(딕셔너리)로 변환.
-    cats = response.json()
-
-    print(cats)
-    print()
-    print(f"{cats['fact']}\n{cats['length']}")
-    print()
-
-    # 딕셔너리를 for문으로 반복
-    for cat in cats:
-        print(f"{cat}: {cats[cat]}")
-
-############################################################
-# 5. [난이도: 중] 포켓몬 정보 찾아보기 - 입력값으로 API 검색
-############################################################
-def lesson_05_pokemon_info():
+def lesson_04_pokemon_info():
     import requests
     import urllib3
 
@@ -130,9 +102,9 @@ def lesson_05_pokemon_info():
         print("해당 포켓몬이 존재하지 않아요.")
 
 ############################################################
-# 6. [난이도: 중] 이름으로 나이 예측 - query string 사용
+# 5. [난이도: 중] 이름으로 나이 예측 - query string 사용
 ############################################################
-def lesson_06_agify_age():
+def lesson_05_agify_age():
     import requests
     import urllib3
 
@@ -152,9 +124,9 @@ def lesson_06_agify_age():
     print(f"{data['name']}의 예상 나이는 {data['age']}세입니다.")
 
 ############################################################
-# 7. [난이도: 중] 자신의 IP와 나라 및 도시 알아보기
+# 6. [난이도: 중] 자신의 IP와 나라 및 도시 알아보기
 ############################################################
-def lesson_07_ip_info():
+def lesson_06_ip_info():
     import requests
     import urllib3
 
@@ -176,12 +148,13 @@ def lesson_07_ip_info():
         print("❌ 위치 정보를 가져오지 못했어요.")
 
 ############################################################
-# 8. [난이도: 중] Books to Scrape 책 제목 추출 - HTML 스크래핑 입문
+# 7. [난이도: 중] Books to Scrape 책 제목 추출 - HTML 스크래핑
 ############################################################
-def lesson_08_books_to_scrape():
+def lesson_07_books_to_scrape():
+    # pip install beautifulsoup4
     import requests
     from bs4 import BeautifulSoup       # HTML을 분석해서 태그를 쉽게 찾아주는 도구
-
+                                        
     print()
     print("=" * 60)
     print("8. [난이도: 중] Books to Scrape 책 제목 추출 - HTML 스크래핑 입문")
@@ -208,9 +181,9 @@ def lesson_08_books_to_scrape():
         print(t["title"])       # <a> 태그 안의 "title" 속성 값을 꺼내기
 
 ############################################################
-# 9. [난이도: 중] Books to Scrape 책 제목과 가격 추출
+# 8. [난이도: 중] Books to Scrape 책 제목과 가격 추출
 ############################################################
-def lesson_09_books_title_price():
+def lesson_08_books_title_price():
     import requests
     from bs4 import BeautifulSoup
 
@@ -253,9 +226,9 @@ def lesson_09_books_title_price():
         print("상태 코드:", response.status_code)
         
 ############################################################
-# 10. [난이도: 상] MovieChart 영화 순위 추출
+# 9. [난이도: 상] MovieChart 영화 순위 추출
 ############################################################
-def lesson_10_moviechart_ranking():
+def lesson_09_moviechart_ranking():
     import requests                     # 웹페이지 가져오는 도구
     import urllib3                      # 보안 경고 메세지 숨기는 기능이 포함된 도구
     from bs4 import BeautifulSoup       # HTML 분석 도구
@@ -335,17 +308,17 @@ def lesson_10_moviechart_ranking():
 
         if movie_titles:                            # 영화 제목이 1개라도 있으면
             for i, title in enumerate(movie_titles, start=1):
-                # 관객 수와 개봉일은 제목 순서와 같은 순서로 들어온다고 보고 매칭.
+                # 영화 제목, 관객 수, 개봉일은 같은 순서로 저장되었다고 보고 매칭
 
                 audience = ""
-                if i - 1 < len(audience_list):
+                if i - 1 < len(audience_list):              # 관객 수
                     audience = audience_list[i - 1]
 
                 open_date = ""
-                if i - 1 < len(open_date_list):
+                if i - 1 < len(open_date_list):             # 개봉일
                     open_date = open_date_list[i - 1]
 
-                print(f"{i}위: {title}")
+                print(f"{i}위: {title}")                    # 영화 제목
                 if audience != "":
                     print(f"   누적 관객 수: {audience}")
                 if open_date != "":
@@ -368,10 +341,9 @@ def lesson_10_moviechart_ranking():
         print("상태 코드:", response.status_code)
 
 ############################################################
-# 11. [난이도: 상] 하키팀 시즌별 통계 데이터 승률 순위 만들기
+# 10. [난이도: 상] 하키팀 시즌별 통계 데이터 승률 순위 만들기
 ############################################################
-
-def lesson_11_hockey_team_stats_ranking():
+def lesson_10_hockey_team_stats_ranking():
     """
     - 여러 페이지에 나뉜 하키팀 시즌별 통계 데이터를 가져온다.
     - HTML 표에서 팀명, 연도, 승, 패, 승률을 추출한다.
@@ -515,9 +487,9 @@ def lesson_11_hockey_team_stats_ranking():
     print("정렬 기준: 승률 높은 순서 → 승수 많은 순서 → 패수 적은 순서")
 
 ############################################################
-# 12. [난이도: 상] Quotes to Scrape 명언과 작가 추출
+# 11. [난이도: 상] Quotes to Scrape 명언과 작가 추출
 ############################################################
-def lesson_12_quotes_to_scrape():
+def lesson_11_quotes_to_scrape():
     import requests
     from bs4 import BeautifulSoup
 
@@ -575,15 +547,14 @@ def main():
         print("1. [하] requests 기본 사용 - 웹 페이지 HTML 가져오기")
         print("2. [하] httpbin GET 요청 연습 - 요청 결과 확인")
         print("3. [하] JSONPlaceholder 게시글 제목 5개 출력")
-        print("4. [하] 고양이 상식 API - JSON 딕셔너리 이해")
-        print("5. [중] 포켓몬 정보 찾아보기 - 입력값으로 API 검색")
-        print("6. [중] 이름으로 나이 예측 - query string 사용")
-        print("7. [중] 자신의 IP와 나라 및 도시 알아보기")
-        print("8. [중] Books to Scrape 책 제목 추출 - HTML 스크래핑 입문")
-        print("9. [중] Books to Scrape 책 제목과 가격 추출")
-        print("10. [상] MovieChart 영화 순위 추출")
-        print("11. [상] 하키팀 시즌별 통계 승률 순위 만들기")
-        print("12. [상] Quotes to Scrape 명언과 작가 추출")
+        print("4. [중] 포켓몬 정보 찾아보기 - 입력값으로 API 검색")
+        print("5. [중] 이름으로 나이 예측 - query string 사용")
+        print("6. [중] 자신의 IP와 나라 및 도시 알아보기")
+        print("7. [중] Books to Scrape 책 제목 추출 - HTML 스크래핑 입문")
+        print("8. [중] Books to Scrape 책 제목과 가격 추출")
+        print("9. [상] MovieChart 영화 순위 추출")
+        print("10. [상] 하키팀 시즌별 통계 승률 순위 만들기")
+        print("11. [상] Quotes to Scrape 명언과 작가 추출")
         print("0. 종료")
         print("=" * 60)
 
@@ -598,31 +569,28 @@ def main():
             lesson_03_json_posts()
             input("\n계속하려면 Enter 키를 누르세요...")
         elif choice == "4":
-            lesson_04_cat_fact()
+            lesson_04_pokemon_info()
             input("\n계속하려면 Enter 키를 누르세요...")
         elif choice == "5":
-            lesson_05_pokemon_info()
+            lesson_05_agify_age()
             input("\n계속하려면 Enter 키를 누르세요...")
         elif choice == "6":
-            lesson_06_agify_age()
+            lesson_06_ip_info()
             input("\n계속하려면 Enter 키를 누르세요...")
         elif choice == "7":
-            lesson_07_ip_info()
+            lesson_07_books_to_scrape()
             input("\n계속하려면 Enter 키를 누르세요...")
         elif choice == "8":
-            lesson_08_books_to_scrape()
+            lesson_08_books_title_price()
             input("\n계속하려면 Enter 키를 누르세요...")
         elif choice == "9":
-            lesson_09_books_title_price()
+            lesson_09_moviechart_ranking()
             input("\n계속하려면 Enter 키를 누르세요...")
         elif choice == "10":
-            lesson_10_moviechart_ranking()
+            lesson_10_hockey_team_stats_ranking()
             input("\n계속하려면 Enter 키를 누르세요...")
         elif choice == "11":
-            lesson_11_hockey_team_stats_ranking()
-            input("\n계속하려면 Enter 키를 누르세요...")
-        elif choice == "12":
-            lesson_12_quotes_to_scrape()
+            lesson_11_quotes_to_scrape()
             input("\n계속하려면 Enter 키를 누르세요...")
         elif choice == "0":
             print("프로그램을 종료합니다.")
